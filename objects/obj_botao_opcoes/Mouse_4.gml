@@ -1,1 +1,1 @@
-room_goto(rm_opcoes)
+room_goto(rm_config)

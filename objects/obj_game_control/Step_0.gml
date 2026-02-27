@@ -50,7 +50,7 @@ if (jogo_acabou == false) {
                 break;
                 
             case 1: // Opções
-                room_goto(rm_opcoes); // Vai para a sala de opções
+                room_goto(rm_config); // Vai para a sala de opções
                 break;
                 
             case 2: // Menu Principal
