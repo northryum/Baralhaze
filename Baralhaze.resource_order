@@ -7,8 +7,6 @@
     {"name":"obj_botao_contestar","order":3,"path":"objects/obj_botao_contestar/obj_botao_contestar.yy",},
     {"name":"obj_botao_desistir","order":6,"path":"objects/obj_botao_desistir/obj_botao_desistir.yy",},
     {"name":"obj_botao_jogar","order":2,"path":"objects/obj_botao_jogar/obj_botao_jogar.yy",},
-    {"name":"obj_botao_menu_jogar","order":7,"path":"objects/obj_botao_menu_jogar/obj_botao_menu_jogar.yy",},
-    {"name":"obj_botao_menu_sair","order":8,"path":"objects/obj_botao_menu_sair/obj_botao_menu_sair.yy",},
     {"name":"obj_botao_opcoes","order":10,"path":"objects/obj_botao_opcoes/obj_botao_opcoes.yy",},
     {"name":"obj_carta_mesa","order":4,"path":"objects/obj_carta_mesa/obj_carta_mesa.yy",},
     {"name":"obj_carta","order":1,"path":"objects/obj_carta/obj_carta.yy",},

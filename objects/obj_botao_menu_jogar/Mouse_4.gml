@@ -1,1 +1,0 @@
-room_goto(rm_jogo); // Coloque aqui o nome da sua Room onde o jogo acontece (ex: Room1)

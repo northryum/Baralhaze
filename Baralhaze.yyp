@@ -25,8 +25,6 @@
     {"id":{"name":"obj_botao_contestar","path":"objects/obj_botao_contestar/obj_botao_contestar.yy",},},
     {"id":{"name":"obj_botao_desistir","path":"objects/obj_botao_desistir/obj_botao_desistir.yy",},},
     {"id":{"name":"obj_botao_jogar","path":"objects/obj_botao_jogar/obj_botao_jogar.yy",},},
-    {"id":{"name":"obj_botao_menu_jogar","path":"objects/obj_botao_menu_jogar/obj_botao_menu_jogar.yy",},},
-    {"id":{"name":"obj_botao_menu_sair","path":"objects/obj_botao_menu_sair/obj_botao_menu_sair.yy",},},
     {"id":{"name":"obj_botao_opcoes","path":"objects/obj_botao_opcoes/obj_botao_opcoes.yy",},},
     {"id":{"name":"obj_carta_mesa","path":"objects/obj_carta_mesa/obj_carta_mesa.yy",},},
     {"id":{"name":"obj_carta","path":"objects/obj_carta/obj_carta.yy",},},
