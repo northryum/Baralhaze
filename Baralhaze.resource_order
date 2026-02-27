@@ -1,25 +1,4 @@
 {
-  "FolderOrderSettings":[
-    {"name":"Objetos","order":1,"path":"folders/Objetos.yy",},
-    {"name":"sprites_","order":2,"path":"folders/sprites_.yy",},
-  ],
-  "ResourceOrderSettings":[
-    {"name":"obj_botao_contestar","order":3,"path":"objects/obj_botao_contestar/obj_botao_contestar.yy",},
-    {"name":"obj_botao_desistir","order":6,"path":"objects/obj_botao_desistir/obj_botao_desistir.yy",},
-    {"name":"obj_botao_jogar","order":2,"path":"objects/obj_botao_jogar/obj_botao_jogar.yy",},
-    {"name":"obj_botao_menu_jogar","order":7,"path":"objects/obj_botao_menu_jogar/obj_botao_menu_jogar.yy",},
-    {"name":"obj_botao_menu_sair","order":8,"path":"objects/obj_botao_menu_sair/obj_botao_menu_sair.yy",},
-    {"name":"obj_botao_opcoes","order":10,"path":"objects/obj_botao_opcoes/obj_botao_opcoes.yy",},
-    {"name":"obj_carta_mesa","order":4,"path":"objects/obj_carta_mesa/obj_carta_mesa.yy",},
-    {"name":"obj_carta","order":1,"path":"objects/obj_carta/obj_carta.yy",},
-    {"name":"obj_menu","order":11,"path":"objects/obj_menu/obj_menu.yy",},
-    {"name":"obj_teste_git","order":12,"path":"objects/obj_teste_git/obj_teste_git.yy",},
-    {"name":"obj_tutorial","order":9,"path":"objects/obj_tutorial/obj_tutorial.yy",},
-    {"name":"aaaaaaaaaaaaa","order":6,"path":"rooms/aaaaaaaaaaaaa/aaaaaaaaaaaaa.yy",},
-    {"name":"rm_menu","order":3,"path":"rooms/rm_menu/rm_menu.yy",},
-    {"name":"rm_opcoes","order":4,"path":"rooms/rm_opcoes/rm_opcoes.yy",},
-    {"name":"rm_tutorial","order":5,"path":"rooms/rm_tutorial/rm_tutorial.yy",},
-    {"name":"spr_botao","order":1,"path":"sprites/spr_botao/spr_botao.yy",},
-    {"name":"spr_contestar","order":2,"path":"sprites/spr_contestar/spr_contestar.yy",},
-  ],
+  "FolderOrderSettings":[],
+  "ResourceOrderSettings":[],
 }

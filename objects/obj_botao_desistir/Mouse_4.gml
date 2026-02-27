@@ -1,1 +1,0 @@
-room_goto(rm_menu); // Vai para a sala do menu (que vamos criar)
