@@ -15,6 +15,7 @@
     {"name":"obj_menu","order":11,"path":"objects/obj_menu/obj_menu.yy",},
     {"name":"obj_teste_git","order":12,"path":"objects/obj_teste_git/obj_teste_git.yy",},
     {"name":"obj_tutorial","order":9,"path":"objects/obj_tutorial/obj_tutorial.yy",},
+    {"name":"aaaaaaaaaaaaa","order":6,"path":"rooms/aaaaaaaaaaaaa/aaaaaaaaaaaaa.yy",},
     {"name":"rm_menu","order":3,"path":"rooms/rm_menu/rm_menu.yy",},
     {"name":"rm_opcoes","order":4,"path":"rooms/rm_opcoes/rm_opcoes.yy",},
     {"name":"rm_tutorial","order":5,"path":"rooms/rm_tutorial/rm_tutorial.yy",},
