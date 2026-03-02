@@ -10,8 +10,8 @@
   "name":"obj_carta_mesa",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objetos",
-    "path":"folders/Objetos.yy",
+    "name":"obj_jogo_executavel",
+    "path":"folders/Objetos/obj_jogo_executavel.yy",
   },
   "parentObjectId":null,
   "persistent":false,

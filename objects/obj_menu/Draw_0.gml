@@ -1,37 +1,40 @@
-draw_self();
-
-// Título do Jogo
+// --- obj_menu: Evento Draw ---
 draw_set_halign(fa_center);
-draw_set_color(c_aqua);
-draw_text_transformed(room_width/2, room_height/4, "Baralhanze", 3, 3, 0);
-
-// Desenhando a coluna de opções
 draw_set_valign(fa_middle);
 
+draw_set_color(c_aqua);
+draw_text_transformed(room_width/2, 100, "Baralhanze", 3, 3, 0);
+
+var _nomes_dificuldade = ["Fácil", "Normal", "Difícil"];
+var _cx = room_width / 2;
+
 for (var i = 0; i < array_length(opcoes); i++) {
-    // 1. Criamos a variável base
-    var _texto_exibir = opcoes[i];
+    var _y = room_height/2 + (i * espacamento);
+    var _texto = opcoes[i];
     
-    // 2. Adicionamos os sufixos dinâmicos
-    if (i == 0) _texto_exibir += texto_modo[modo_atual];
-    if (i == 1) _texto_exibir += texto_dificuldade[global.dificuldade];
+    // Tratamento dos Textos
+    if (i == 0) _texto = "Modo de Jogo: " + ((modo_atual == 0) ? "Solo" : "Multiplayer Online");
+    if (i == 1) {
+        if (modo_atual == 1) _texto = "Dificuldade: Indisponível"; 
+        else _texto = "Dificuldade: " + _nomes_dificuldade[global.dificuldade];
+    }
     
-    // 3. Lógica de cores e destaque
+    // Desenho
     if (i == selecao_atual) {
-        draw_set_color(c_yellow);
-        // Desenhamos o texto completo com as setinhas
-        draw_text_transformed(room_width/2, room_height/2 + (i * espacamento), "> " + _texto_exibir + " <", 1.5, 1.5, 0);
-    } 
-    else {
-        // Se o modo for Multiplayer, podemos deixar a dificuldade cinza (opcional)
-        if (i == 1 && modo_atual == 1) draw_set_color(c_dkgray);
-        else draw_set_color(c_white);
+        if (i == 1 && modo_atual == 1) draw_set_color(c_dkgray); 
+        else draw_set_color(c_yellow);
         
-        // AQUI ESTAVA O ERRO: Use _texto_exibir para aparecer o Modo/Dificuldade mesmo sem seleção
-        draw_text_transformed(room_width/2, room_height/2 + (i * espacamento), _texto_exibir, 1.2, 1.2, 0);
+        draw_text_transformed(_cx, _y, _texto, 1.2, 1.2, 0);
+        
+        // Desenha as setas FIXAS a 200 pixels do centro
+        if (i == 0 || (i == 1 && modo_atual == 0)) {
+            draw_text_transformed(_cx - 200, _y, "<", 1.2, 1.2, 0);
+            draw_text_transformed(_cx + 200, _y, ">", 1.2, 1.2, 0);
+        }
+    } else {
+        if (i == 1 && modo_atual == 1) draw_set_color(c_dkgray); 
+        else draw_set_color(c_white);
+        draw_text(_cx, _y, _texto);
     }
 }
-
-// Reseta o alinhamento e cor para o padrão do sistema
-draw_set_valign(fa_top);
-draw_set_color(c_white);
+draw_set_halign(fa_left); draw_set_valign(fa_top);

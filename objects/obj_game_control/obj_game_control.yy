@@ -12,8 +12,8 @@
   "name":"obj_game_control",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objetos",
-    "path":"folders/Objetos.yy",
+    "name":"obj_config",
+    "path":"folders/Objetos/obj_config.yy",
   },
   "parentObjectId":null,
   "persistent":false,

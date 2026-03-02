@@ -11,8 +11,8 @@
   "name":"obj_lobby_control",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objetos",
-    "path":"folders/Objetos.yy",
+    "name":"obj_online",
+    "path":"folders/Objetos/obj_online.yy",
   },
   "parentObjectId":null,
   "persistent":false,

@@ -8,8 +8,8 @@
   "name":"obj_botao_jogar",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objetos",
-    "path":"folders/Objetos.yy",
+    "name":"obj_jogo_executavel",
+    "path":"folders/Objetos/obj_jogo_executavel.yy",
   },
   "parentObjectId":null,
   "persistent":false,

@@ -1,5 +1,9 @@
+carregar_configuracoes();
+// Adicione isso no final do Evento Create do obj_menu E do obj_opcoes
+mx_prev = mouse_x;
+my_prev = mouse_y;
 // Nossa coluna de opções
-opcoes = ["Modo de Jogo: ", "Dificuldade: ", "Tutorial", "Opções", "Sair do Jogo"];
+opcoes = ["Modo de Jogo: ", "Dificuldade: ", "Tutorial", "Configurações", "Sair do Jogo"];
 
 // Qual opção está selecionada no momento (0 é a primeira)
 selecao_atual = 0;
