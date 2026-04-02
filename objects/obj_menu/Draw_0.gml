@@ -6,22 +6,27 @@ draw_set_valign(fa_middle);
 draw_set_color(c_aqua);
 draw_text_transformed(room_width/2, 100, "Baralhanze", 3, 3, 0);
 
-var _nomes_dificuldade = ["Fácil", "Normal", "Difícil"];
+var _nomes_dificuldade = [tr("dif_facil"), tr("dif_normal"), tr("dif_dificil")];
 var _cx = room_width / 2;
 
 for (var i = 0; i < array_length(opcoes); i++) {
     var _y = room_height/2 + (i * espacamento);
-    var _texto = opcoes[i];
+    var _texto = tr(opcoes[i]);
     
     // Tratamento dos Textos
-    if (i == 0) _texto = "Modo de Jogo: " + ((modo_atual == 0) ? "Solo" : "Multiplayer Online");
-    if (i == 1) {
-        if (modo_atual == 1) _texto = "Dificuldade: Indisponível"; 
-        else _texto = "Dificuldade: " + _nomes_dificuldade[global.dificuldade];
+    if (i == 0) _texto = tr("menu_modo") + ((modo_atual == 0) ? tr("modo_solo") : tr("modo_multi_online"));
+if (i == 1) {
+        if (modo_atual == 1) {
+            // Junta "Dificuldade: " + "Indisponível"
+            _texto = tr("menu_dif") + tr("dif_indisp"); 
+        } else {
+            // Junta "Dificuldade: " + a dificuldade traduzida do array
+            _texto = tr("menu_dif") + _nomes_dificuldade[global.dificuldade];
+        }
     }
     
     // Desenho
-    if (i == selecao_atual) {
+if (i == selecao_atual) {
         if (i == 1 && modo_atual == 1) draw_set_color(c_dkgray); 
         else draw_set_color(c_yellow);
         
@@ -35,6 +40,7 @@ for (var i = 0; i < array_length(opcoes); i++) {
     } else {
         if (i == 1 && modo_atual == 1) draw_set_color(c_dkgray); 
         else draw_set_color(c_white);
+        
         draw_text(_cx, _y, _texto);
     }
 }

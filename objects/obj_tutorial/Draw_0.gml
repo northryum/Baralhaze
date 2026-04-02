@@ -1,4 +1,4 @@
-// Coloque isso na PRIMEIRA linha do Evento Draw do objeto do Tutorial:
+// --- obj_tutorial: Evento Draw ---
 draw_set_font(Font_geral);
 draw_self();
 
@@ -13,23 +13,40 @@ draw_set_valign(fa_middle);
 
 // Título Fixo no topo
 draw_set_color(c_yellow);
-draw_text_transformed(room_width / 2, 50, "COMO JOGAR", 2, 2, 0);
+draw_text_transformed(room_width / 2, 50, tr("menu_tuto"), 2, 2, 0);
 
-// Desenha o texto da página atual
+// Desenha o texto da página atual (A MÁGICA ACONTECE AQUI!)
 draw_set_color(c_white);
-var _texto = paginas[pagina_atual];
+// Puxa a chave do array e já passa pela tradução
+var _texto = tr(paginas[pagina_atual]); 
 
 // A função draw_text_ext(x, y, texto, separação_linhas, largura_maxima)
 // impede que o texto vaze pelos cantos da tela!
-draw_text_ext_transformed(room_width / 2, room_height / 2, _texto, 30, room_width - 100, 1.5, 1.5, 0);
+// --- obj_tutorial: Evento Draw (Substitua a linha de desenho por esta) ---
+
+// Definimos a escala que queremos
+var _escala = 1.5;
+
+// Calculamos a largura real que o texto deve ter ANTES de ser ampliado.
+// room_width - 150 dá uma margem total de 75 pixels de cada lado (mais segura).
+var _largura_base = room_width - 150;
+
+// Dividimos a largura base pela escala. O resultado é o limite que o draw_text_ext vai usar.
+var _limite_quebra = _largura_base / _escala;
+
+// Agora usamos a variável calculada
+draw_text_ext_transformed(room_width / 2, room_height / 2, _texto, 30, _limite_quebra, _escala, _escala, 0);
 
 // Rodapé com os Controles e Indicador de Página
 draw_set_valign(fa_bottom);
 draw_set_color(c_ltgray);
 
-var _indicador = "Página " + string(pagina_atual + 1) + " de " + string(array_length(paginas));
+// Monta o "Página X de Y" traduzido
+var _indicador = tr("tuto_pg_atual") + string(pagina_atual + 1) + tr("tuto_pg_de") + string(array_length(paginas));
 draw_text(room_width / 2, room_height - 60, _indicador);
-draw_text(room_width / 2, room_height - 20, "Setas: Navegar  |  ESC: Voltar ao Menu");
+
+// Controles traduzidos
+draw_text(room_width / 2, room_height - 20, tr("tuto_rodape"));
 
 // Reseta o alinhamento
 draw_set_valign(fa_top);

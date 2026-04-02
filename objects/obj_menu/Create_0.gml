@@ -3,8 +3,7 @@ carregar_configuracoes();
 mx_prev = mouse_x;
 my_prev = mouse_y;
 // Nossa coluna de opções
-opcoes = ["Modo de Jogo: ", "Dificuldade: ", "Tutorial", "Configurações", "Sair do Jogo"];
-
+opcoes = ["menu_jogar_br", "menu_multi", "menu_tuto", "menu_config", "c"];
 // Qual opção está selecionada no momento (0 é a primeira)
 selecao_atual = 0;
 

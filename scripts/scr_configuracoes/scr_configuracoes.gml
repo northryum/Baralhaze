@@ -26,6 +26,8 @@ function carregar_configuracoes() {
     global.tecla_confirmar = ini_read_real("Controles", "confirmar", vk_enter);
     
 	global.skin_atual = ini_read_real("Visual", "Skin", 0);
+	
+	global.idioma_atual = ini_read_real("Visual", "Idioma", 0);
     ini_close();
     
     // Aplica as configurações visuais imediatamente
@@ -47,6 +49,7 @@ function salvar_configuracoes() {
     ini_write_real("Controles", "confirmar", global.tecla_confirmar);
     
 	ini_write_real("Visual", "Skin", global.skin_atual);
+	ini_write_real("Visual", "Idioma", global.idioma_atual);
     ini_close();
 }
 

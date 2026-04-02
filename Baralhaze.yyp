@@ -44,6 +44,7 @@
     {"id":{"name":"obj_network_control","path":"objects/obj_network_control/obj_network_control.yy",},},
     {"id":{"name":"obj_opcoes","path":"objects/obj_opcoes/obj_opcoes.yy",},},
     {"id":{"name":"obj_system","path":"objects/obj_system/obj_system.yy",},},
+    {"id":{"name":"obj_tutorial_1","path":"objects/obj_tutorial_1/obj_tutorial_1.yy",},},
     {"id":{"name":"obj_tutorial","path":"objects/obj_tutorial/obj_tutorial.yy",},},
     {"id":{"name":"rm_config","path":"rooms/rm_config/rm_config.yy",},},
     {"id":{"name":"rm_controles","path":"rooms/rm_controles/rm_controles.yy",},},

@@ -66,7 +66,7 @@ jogo_acabou = false;
 nome_vencedor = "";
 
 // Menu da tela de vitória
-opcoes_fim = ["Jogar Novamente", "Opções", "Menu Principal"];
+opcoes_fim = ["fim_jogar", "fim_opcoes", "fim_menu"];
 selecao_fim = 0;
 #endregion
 

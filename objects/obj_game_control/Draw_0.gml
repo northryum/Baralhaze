@@ -8,14 +8,12 @@ draw_set_halign(fa_left);
 var _x_hud = 30; // Margem fixa no canto esquerdo
 
 // 1. Carta Alvo e Mesa
-var _nome_alvo = "";
-if (carta_objetivo == 0) _nome_alvo = "Ás (A)";
-if (carta_objetivo == 2) _nome_alvo = "Rainha (Q)";
-if (carta_objetivo == 3) _nome_alvo = "Rei (K)";
+var _nomes_cartas = [tr("carta_as"), tr("carta_coringa"), tr("carta_rainha"), tr("carta_rei")];
+var _nome_alvo = _nomes_cartas[carta_objetivo];
 
 // Trocamos o (room_width / 2) por _x_hud
-draw_text(_x_hud, 30, "CARTA DA MESA: " + _nome_alvo);
-draw_text(_x_hud, 60, "Cartas Acumuladas: " + string(array_length(pilha_mesa)));
+draw_text(_x_hud, 30, tr("hud_cartas_mesa") + _nome_alvo);
+draw_text(_x_hud, 60, tr("hud_cartas") + string(array_length(pilha_mesa)));
 
 // 2. Legenda do Turno Inteligente (Correção)
 if (turno_atual == 0) {
@@ -27,19 +25,19 @@ if (turno_atual == 0) {
     
     if (_forcar) {
         draw_set_color(c_red); // Fica vermelho pra dar o alerta de urgência!
-        draw_text(_x_hud, 90, "-> ÚLTIMA CARTA! Você é OBRIGADO a Contestar! <-");
+draw_text(_x_hud, 90, tr("hud_aviso_ultima"));
     } 
     else {
         draw_set_color(c_yellow);
         if (array_length(ultimas_cartas_jogadas) == 0) {
-            draw_text(_x_hud, 90, "-> SUA VEZ! Selecione e Jogue <-");
+            draw_text(_x_hud, 90,tr("hud_aviso_jogue"));
         } else {
-            draw_text(_x_hud, 90, "-> SUA VEZ! Jogue ou Conteste <-");
+draw_text(_x_hud, 90, tr("hud_sua_vez_acao"));
         }
     }
 } else {
     draw_set_color(c_ltgray);
-    draw_text(_x_hud, 90, "Vez do Bot " + string(turno_atual) + " pensando...");
+draw_text(_x_hud, 90, tr("hud_vez_bot") + string(turno_atual) + tr("hud_pensando"));
 }
 
 // Reseta a cor e o alinhamento para não "vazar" para os próximos desenhos
@@ -112,7 +110,7 @@ if (quem_contestou_visual != -1) {
     draw_set_color(c_red);
     draw_set_alpha(0.6); // Meio transparente para não cobrir tudo
     
-    var _txt = "CONTESTOU!";
+    var _txt = tr("hud_btn_duvido");
     draw_set_halign(fa_center);
     draw_set_valign(fa_middle);
     
@@ -226,29 +224,35 @@ if (jogo_acabou == true) {
     // Título FIM DE JOGO
     draw_set_color(c_yellow);
     draw_set_halign(fa_center);
-    draw_text_transformed(room_width/2, room_height/2 - 120, "FIM DE JOGO", 2, 2, 0);
+   draw_text_transformed(room_width/2, room_height/2 - 100, tr("fim_titulo"), 2, 2, 0);// Ajuste o x, y e escalas pro seu código
     
     // Nome do Vencedor
     draw_set_color(c_white);
-    draw_text_transformed(room_width/2, room_height/2 - 60, nome_vencedor, 1.5, 1.5, 0);
+    var _txt_vencedor = "";
+    
+    // Usa a variável 'vencedor_final' que salvamos no Step
+    if (vencedor_final == 0) {
+        _txt_vencedor = tr("fim_venceu_voce");
+    } else {
+        _txt_vencedor = "BOT " + string(vencedor_final) + tr("fim_venceu_bot");
+    }
+    
+draw_text_transformed(room_width/2, room_height/2 - 50, _txt_vencedor, 1.5, 1.5, 0);
 
     // =========================================
     // DESENHAR OPÇÕES DO MENU DE FIM DE JOGO
     // =========================================
     draw_set_valign(fa_middle);
-    var _espaco = 50; // Espaço entre as opções
-    
+    var _espaco = 50; 
     for (var i = 0; i < array_length(opcoes_fim); i++) {
-        if (i == selecao_fim) {
-            // Opção Selecionada
-            draw_set_color(c_yellow);
-            draw_text_transformed(room_width/2, room_height/2 + 30 + (i * _espaco), "> " + opcoes_fim[i] + " <", 1.2, 1.2, 0);
-        } else {
-            // Opções Normais
-            draw_set_color(c_white);
-            draw_text_transformed(room_width/2, room_height/2 + 30 + (i * _espaco), opcoes_fim[i], 1, 1, 0);
-        }
+        var _y_item = (room_height / 2) + 30 + (i * _espaco); 
+        
+        // Traduz as chaves do array dinamicamente
+        var _texto = tr(opcoes_fim[i]); 
+        
+        if (i == selecao_fim) draw_set_color(c_yellow); else draw_set_color(c_white);
+        
+        var _txt_desenho = (i == selecao_fim) ? "> " + _texto + " <" : _texto;
+        draw_text_transformed(room_width/2, _y_item, _txt_desenho, 1.2, 1.2, 0);
     }
-    
-    draw_set_valign(fa_top); // Reseta o alinhamento
 }

@@ -16,6 +16,7 @@ if (array_length(mao_jogador[i]) == 0 && array_length(ultimas_cartas_jogadas) ==
     }
 
     // Vitória por sobrevivência (só sobrou 1)
+   // Vitória por sobrevivência (só sobrou 1)
     if (_vivos == 1) {
         _vencedor_id = _ultimo_vivo;
     }
@@ -24,8 +25,9 @@ if (array_length(mao_jogador[i]) == 0 && array_length(ultimas_cartas_jogadas) ==
     if (_vencedor_id != -1) {
         jogo_acabou = true;
         
-        if (_vencedor_id == 0) nome_vencedor = "VOCÊ VENCEU!";
-        else nome_vencedor = "BOT " + string(_vencedor_id) + " VENCEU!";
+        // A MÁGICA É ESSA: Guardamos APENAS o ID bruto de quem venceu.
+        // E removemos o nome_vencedor daqui!
+        vencedor_final = _vencedor_id; 
     }
     
 } else {

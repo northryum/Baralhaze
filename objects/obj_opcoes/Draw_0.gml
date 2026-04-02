@@ -7,9 +7,9 @@ draw_set_font(Font_geral);
 draw_set_valign(fa_middle);
 draw_set_halign(fa_center);
 
-// Título da Tela
+// Título da Tela (Usando a chave que já criamos para o menu)
 draw_set_color(c_aqua);
-draw_text_transformed(room_width/2, 100, "CONFIGURAÇÕES", 2, 2, 0);
+draw_text_transformed(room_width/2, 100, string_upper(tr("menu_config")), 2, 2, 0);
 
 var _x_esq = room_width / 2 - 50; 
 var _x_dir = room_width / 2 + 50; 
@@ -17,6 +17,10 @@ var _x_dir = room_width / 2 + 50;
 // A MATEMÁTICA AGORA USA O 'menu_chaves'
 var _altura_total = (array_length(menu_chaves) - 1) * espacamento;
 var _y_inicial = (room_height / 2) - (_altura_total / 2) + 30;
+
+// Arrays locais traduzidos para Tela e Vídeo
+var _txt_tela_array = [tr("tela_janela"), tr("tela_cheia"), tr("tela_borda")];
+var _txt_video_array = [tr("vid_baixa"), tr("vid_media"), tr("vid_alta")];
 
 for (var i = 0; i < array_length(menu_chaves); i++) {
     var _y = _y_inicial + (i * espacamento); 
@@ -55,11 +59,11 @@ for (var i = 0; i < array_length(menu_chaves); i++) {
         else if (i >= 1 && i <= 4) {
             // Puxa o valor da variável correspondente
             var _valor = "";
-            if (i == 1) _valor = texto_tela[global.tela_modo];
-            if (i == 2) _valor = global.texto_resolucao[global.resolucao_index];
-            if (i == 3) _valor = texto_video[global.video_qualidade];
+            if (i == 1) _valor = _txt_tela_array[global.tela_modo];
+            if (i == 2) _valor = global.texto_resolucao[global.resolucao_index]; // Resolução não precisa traduzir (são números)
+            if (i == 3) _valor = _txt_video_array[global.video_qualidade];
             
-            // NOVO: Puxa o nome do idioma baseado na chave "lang_nome"
+            // Puxa o nome do idioma baseado na chave "lang_nome"
             if (i == 4) _valor = tr("lang_nome"); 
             
             if (i == selecao_atual) {
@@ -102,10 +106,15 @@ if (estado_confirmacao) {
     draw_rectangle(_cx - 200, _cy - 100, _cx + 200, _cy + 100, true); 
     
     draw_set_halign(fa_center);
-    draw_text(_cx, _cy - 50, "Configurações visuais não salvas.\nDeseja manter e sair ou reverter?");
+    // Texto do aviso traduzido
+    draw_text(_cx, _cy - 50, tr("pop_aviso"));
     
-    var _txt_manter = (selecao_confirmacao == 0) ? "> Manter Alterações <" : "Manter Alterações";
-    var _txt_reverter = (selecao_confirmacao == 1) ? "> Reverter <" : "Reverter";
+    // Botões do popup traduzidos e com formatação de seleção
+    var _str_manter = tr("pop_manter");
+    var _str_reverter = tr("pop_reverter");
+    
+    var _txt_manter = (selecao_confirmacao == 0) ? "> " + _str_manter + " <" : _str_manter;
+    var _txt_reverter = (selecao_confirmacao == 1) ? "> " + _str_reverter + " <" : _str_reverter;
     
     if (selecao_confirmacao == 0) draw_set_color(c_yellow); else draw_set_color(c_white);
     draw_text(_cx - 100, _cy + 30, _txt_manter);
