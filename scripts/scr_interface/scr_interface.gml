@@ -18,3 +18,4 @@ function navegar_menu_vertical(_selecao_atual, _tamanho_array) {
     // 4. Devolve o novo valor para o objeto usar
     return _selecao_atual;
 }
+

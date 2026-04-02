@@ -1,3 +1,5 @@
+// Coloque isso na PRIMEIRA linha do Evento Draw do objeto do Tutorial:
+draw_set_font(Font_geral);
 draw_self();
 
 // Fundo (opcional, caso sua sala não tenha cor de fundo)

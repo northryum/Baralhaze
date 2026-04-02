@@ -60,7 +60,11 @@ if (_enter) {
             if (modo_atual == 0) room_goto(rm_jogo_bots); else room_goto(rm_lobby); 
             break;
         case 2: room_goto(rm_tutorial); break;
-        case 3: room_goto(rm_config);   break;
+        case 3: // Configurações
+            global.sala_anterior = room; // Salva que viemos do Menu Principal
+            room_goto(rm_config);   
+            break;
         case 4: game_end();             break;
     }
 }
+

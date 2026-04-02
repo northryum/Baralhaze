@@ -1,3 +1,9 @@
+
+
+// --- Final do Evento Create ---
+mx_prev = mouse_x;
+my_prev = mouse_y;
+
 esperando_contestacao = false; // Se for true, ninguém pode jogar ou pensar
 
 #region Criando o Baralho (Setup)
@@ -25,12 +31,20 @@ for (var i = 0; i < 4; i++) {
 quem_contestou_visual = -1;
 cartas_reveladas = [0, 0, 0, 0]; 
 
+// ==========================================
 // Gerar os objetos das cartas na mão do jogador 0
-var pos_x_inicial = room_width / 2 - 150; 
-var pos_y = room_height - 100;
+// ==========================================
+var _qtd_cartas_jogador = array_length(mao_jogador[0]);
 var espacamento = 80;
 
-for (var i = 0; i < array_length(mao_jogador[0]); i++) {
+// Calcula a largura total da mão para centralizar o leque
+var _largura_total = (_qtd_cartas_jogador - 1) * espacamento; 
+
+// A primeira carta nasce recuada exatamente metade dessa largura
+var pos_x_inicial = (room_width / 2) - (_largura_total / 2); 
+var pos_y = room_height - 100;
+
+for (var i = 0; i < _qtd_cartas_jogador; i++) {
     var nova_carta = instance_create_layer(pos_x_inicial + (i * espacamento), pos_y, "Instances", obj_carta);
     nova_carta.valor = mao_jogador[0][i];
     nova_carta.y_original = pos_y;
@@ -60,7 +74,7 @@ selecao_fim = 0;
 
 function contestar_jogada(_quem_contestou) {
     if (jogo_acabou) return;
-    esperando_contestacao = true; // ATIVA A TRAVA
+    esperando_contestacao = true; 
     alarm[0] = -1; 
     quem_contestou_visual = _quem_contestou; 
     var _mentiu = false;
@@ -81,12 +95,13 @@ function contestar_jogada(_quem_contestou) {
     // Se _mentiu for false aqui, significa que todas as cartas eram ou o Objetivo ou Valetes (Coringas).
 
     var _eliminado = (_mentiu) ? quem_jogou_ultimo : _quem_contestou;
-    
-    jogador_ativo[_eliminado] = false;
-    mao_jogador[_eliminado] = []; 
-    
+	
     show_debug_message("CONTESTAÇÃO: Mentiu? " + string(_mentiu) + " | Eliminado: " + string(_eliminado));
     
+	jogador_ativo[_eliminado] = false;
+    mao_jogador[_eliminado] = []; 
+	// Após a eliminação, a mesa "esfria". Ninguém mais pode ser contestado.
+    quem_jogou_ultimo = -1;
     with (obj_carta_mesa) {
         virada_para_baixo = false;
         obj_game_control.cartas_reveladas[valor]++;
@@ -120,11 +135,24 @@ function passar_turno() {
 }
 #endregion
 
-// Criar botões de Interface
-instance_create_layer(room_width - 150, room_height - 100, "Instances", obj_botao_jogar);
-instance_create_layer(room_width - 150, room_height - 160, "Instances", obj_botao_contestar);
+var _y_botoes = room_height - 100; 
+var _cx = room_width / 2; // O eixo central da tela
 
+// Essa variável define a distância do centro. 
+// Aumente para afastar do deck, diminua para colar mais no deck.
+var _afastamento = 350; 
+
+// 1. Criar o botão de Contestar na ESQUERDA do deck
+instance_create_layer(_cx - _afastamento, _y_botoes, "Instances", obj_botao_contestar);
+
+// 2. Criar o botão de Jogar na DIREITA do deck
+instance_create_layer(_cx + _afastamento, _y_botoes, "Instances", obj_botao_jogar);
 // Chute inicial para o primeiro turno
 if (turno_atual != 0) {
     alarm[0] = 100; 
 }
+
+global.skin_atual = 0; // 0 = Padrão, 1 = Arcade, 2 = Taverna
+
+// Só depois de definir o valor padrão, você chama o carregamento do arquivo
+carregar_configuracoes();

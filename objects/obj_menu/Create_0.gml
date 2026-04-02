@@ -19,3 +19,4 @@ texto_dificuldade = ["Fácil", "Normal", "Difícil"];
 modo_atual = 0; // 0 = Solo (Bots), 1 = Multiplayer
 texto_modo = ["Solo (Bots)", "Multiplayer Online"];
 
+global.sala_anterior = room; // O padrão é o menu principal

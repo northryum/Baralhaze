@@ -1,4 +1,14 @@
-draw_self();
+// --- obj_carta: Evento Draw ---
+var _meu_sprite = get_sprite_skin();
+
+if (selecionada) {
+    // Adicionamos "+ 1" ao valor para pular o frame 0 (Verso)
+    draw_sprite_ext(_meu_sprite, valor + 1, x, y - 20, 1, 1, 0, c_yellow, 1);
+} else {
+    draw_sprite_ext(_meu_sprite, valor + 1, x, y, 1, 1, 0, c_white, 1);
+}
+
+/*draw_self();
 
 // Desenha a carta baseada no valor dela
 draw_sprite(spr_cartas, valor, x, y);

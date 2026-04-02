@@ -1,8 +1,6 @@
 // --- obj_controles: Evento Step ---
 
-// ==========================================
-// MODO ESCUTA (Capturando a nova tecla)
-// ==========================================
+// Capturando a nova tecla
 if (esperando_tecla) {
     // A função keyboard_check_pressed(vk_anykey) checa se QUALQUER tecla foi apertada
     if (keyboard_check_pressed(vk_anykey)) {
@@ -29,11 +27,11 @@ if (esperando_tecla) {
     // Se clicar com o mouse fora, cancela
     if (mouse_check_button_pressed(mb_left)) esperando_tecla = false;
     
-    exit; // Para a execução aqui. O menu não vai se mexer!
+    exit;
 }
 
 // ==========================================
-// MODO MENU NORMAL (Navegação Teclado + Mouse)
+// MODO MENU NORMAL: Navegação Teclado + Mouse
 // ==========================================
 var _enter = keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_space);
 var _esc   = keyboard_check_pressed(vk_escape);
@@ -43,7 +41,7 @@ var _mouse_moveu = (mouse_x != mx_prev || mouse_y != my_prev);
 mx_prev = mouse_x;
 my_prev = mouse_y;
 
-// Navegação via Teclado (Reaproveitando o seu script!)
+// Navegação via Teclado
 selecao_atual = navegar_menu_vertical(selecao_atual, array_length(menu_controles));
 
 // Navegação via Mouse
@@ -61,7 +59,7 @@ for (var i = 0; i < array_length(menu_controles); i++) {
 // Ações de Confirmação
 if (_enter) {
     if (selecao_atual <= 4) {
-        // Clicou em um controle -> Entra no modo de escuta!
+        // Clicou em um controle -> Entra no modo de captura!
         esperando_tecla = true;
     } 
     else if (selecao_atual == 5) {

@@ -8,11 +8,24 @@ var _bot_id = turno_atual;
 var _mao_bot = mao_jogador[_bot_id]; 
 var _decidiu_contestar = false;
 var _chance_contestar = 0; // Começa em 0 e muda conforme a dificuldade
+// ==========================================================
+// MUDANÇA: TRAVA DA ÚLTIMA CARTA (CONTESTAÇÃO OBRIGATÓRIA)
+// ==========================================================
+var _forcar_contestacao = false;
+if (quem_jogou_ultimo != -1) {
+    if (array_length(mao_jogador[quem_jogou_ultimo]) == 0) {
+        _forcar_contestacao = true;
+    }
+}
 
+// Se for obrigatório, ignora a IA e contesta na hora!
+if (_forcar_contestacao) {
+    _decidiu_contestar = true;
+}
 // ==========================================================
 // 1. LÓGICA DE INTELIGÊNCIA (IA) - CÁLCULO DA CHANCE
 // ==========================================================
-if (array_length(ultimas_cartas_jogadas) > 0) {
+else if (array_length(ultimas_cartas_jogadas) > 0) {
     
     switch (global.dificuldade) {
         case 0: // FÁCIL: Puramente aleatório
@@ -58,13 +71,17 @@ if (_decidiu_contestar) {
 else {
     // BOT DECIDIU JOGAR CARTAS
     
-    // LIMPEZA VISUAL: Remove cartas da jogada anterior para não acumular
+    // Limpeza Visual
     with (obj_carta_mesa) { instance_destroy(); }
     
-    // Limpa a memória das últimas cartas para a nova jogada
-    array_delete(ultimas_cartas_jogadas, 0, array_length(ultimas_cartas_jogadas));
+    // ==========================================
+    // ESCUDO 1: Limpeza da memória da mesa
+    // ==========================================
+    if (array_length(ultimas_cartas_jogadas) > 0) {
+        array_delete(ultimas_cartas_jogadas, 0, array_length(ultimas_cartas_jogadas));
+    }
 
-    // Determina quantas cartas o bot vai jogar (IA de volume)
+    // Determina quantas cartas jogar
     var _quantidade_para_jogar = 1;
     if (global.dificuldade > 0 && array_length(_mao_bot) > 3) {
         var _sorteio = irandom(100);
@@ -73,27 +90,32 @@ else {
     }
     _quantidade_para_jogar = clamp(_quantidade_para_jogar, 1, array_length(_mao_bot));
 
-    // Define posição de origem visual
-    var _sx = room_width / 2;
-    var _sy = room_height / 2;
-    if (_bot_id == 1) { _sx = 50; _sy = room_height / 2; }
-    if (_bot_id == 2) { _sx = room_width / 2; _sy = 150; }
-    if (_bot_id == 3) { _sx = room_width - 50; _sy = room_height / 2; }
-
-    // Loop para jogar a quantidade sorteada
+    // Loop de jogar as cartas
     repeat(_quantidade_para_jogar) {
-        // Pega a primeira carta da mão dele
-        var _carta = _mao_bot[0];
         
-        array_push(pilha_mesa, _carta);
-        array_push(ultimas_cartas_jogadas, _carta);
-        
-        // Cria o objeto visual na mesa
-        var _visual = instance_create_layer(_sx + irandom_range(-15, 15), _sy + irandom_range(-15, 15), "Instances", obj_carta_mesa);
-        _visual.valor = _carta;
-        
-        // Remove da mão real
-        array_delete(mao_jogador[_bot_id], 0, 1);
+        // ==========================================
+        // ESCUDO 2: Garante que o bot ainda tem cartas antes de deletar
+        // ==========================================
+        if (array_length(mao_jogador[_bot_id]) > 0) {
+            
+            // Pega a primeira carta da mão real dele
+            var _carta = mao_jogador[_bot_id][0]; 
+            
+            array_push(pilha_mesa, _carta);
+            array_push(ultimas_cartas_jogadas, _carta);
+            
+            // Coordenadas com "bagunça"
+            var _rx = (room_width / 2) + irandom_range(-20, 20);
+            var _ry = (room_height / 2) + irandom_range(-20, 20);
+            var _ra = irandom_range(-15, 15); 
+            
+            var _visual = instance_create_layer(_rx, _ry, "Instances", obj_carta_mesa);
+            _visual.valor = _carta;
+            _visual.image_angle = _ra; 
+            
+            // Remove a carta da mão com segurança
+            array_delete(mao_jogador[_bot_id], 0, 1);
+        }
     }
 
     quem_jogou_ultimo = _bot_id;

@@ -1,17 +1,14 @@
+// --- obj_lobby_control: Evento Create ---
+opcoes = ["Criar Partida", "Entrar em Partida", "Opções", "Voltar ao Menu"];
 selecao_atual = 0;
 espacamento = 60;
+// 0 = Pública, 1 = Privada
+tipo_partida = 0; 
 
+// Variáveis para rastrear o mouse (igual fizemos nos outros menus)
+mx_prev = mouse_x;
+my_prev = mouse_y;
 
-
-
-
-
-
-// Opções do Lobby
-
-selecao_atual = 0;
-espacamento = 60;
-opcoes = ["Criar Partida Pública", "Criar Partida Privada", "Opções", "Voltar ao Menu" ];
 
 // Variáveis de conexão
 global.is_host = false;

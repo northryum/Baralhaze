@@ -1,5 +1,9 @@
 // --- obj_opcoes: Evento Draw ---
 draw_self();
+
+// ATIVA A FONTE PARA OS ACENTOS FUNCIONAREM!
+draw_set_font(Font_geral); 
+
 draw_set_valign(fa_middle);
 draw_set_halign(fa_center);
 
@@ -10,29 +14,30 @@ draw_text_transformed(room_width/2, 100, "CONFIGURAÇÕES", 2, 2, 0);
 var _x_esq = room_width / 2 - 50; 
 var _x_dir = room_width / 2 + 50; 
 
-for (var i = 0; i < array_length(menu_raiz); i++) {
-    var _y = room_height/2 + (i * espacamento);
-    var _texto = menu_raiz[i];
+// A MATEMÁTICA AGORA USA O 'menu_chaves'
+var _altura_total = (array_length(menu_chaves) - 1) * espacamento;
+var _y_inicial = (room_height / 2) - (_altura_total / 2) + 30;
+
+for (var i = 0; i < array_length(menu_chaves); i++) {
+    var _y = _y_inicial + (i * espacamento); 
     
-    // Cor de Seleção
-    if (i == selecao_atual) {
-        draw_set_color(c_yellow);
-    } else {
-        draw_set_color(c_white);
-    }
+    // TRADUZ A CHAVE PARA O IDIOMA ATUAL AQUI!
+    var _texto = tr(menu_chaves[i]); 
+    
+    if (i == selecao_atual) draw_set_color(c_yellow); else draw_set_color(c_white);
     
     // ========================================
-    // ITENS DE DUAS COLUNAS (Índices 0, 1, 2, 3)
+    // ITENS DE DUAS COLUNAS (Índices 0 a 4) 
+    // Áudio(0), Tela(1), Resolução(2), Vídeo(3), IDIOMA(4)
     // ========================================
-    if (i <= 3) {
+    if (i <= 4) {
         draw_set_halign(fa_right);
-        // Coloca a setinha apenas no rótulo da esquerda
         var _txt_esq = (i == selecao_atual) ? "> " + _texto : _texto;
         draw_text_transformed(_x_esq, _y, _txt_esq, 1.2, 1.2, 0);
         
         draw_set_halign(fa_left);
         
-        if (i == 0) { 
+        if (i == 0) {
             // 0. BARRA DE ÁUDIO
             var _largura_barra = 200; 
             var _x_barra = _x_dir; 
@@ -47,30 +52,32 @@ for (var i = 0; i < array_length(menu_raiz); i++) {
             draw_set_color(c_white); 
             draw_text(_x_barra + _largura_barra + 15, _y, string(round(global.vol_master * 100)) + "%");
         } 
-        else if (i >= 1 && i <= 3) {
-            // 1, 2 e 3. TELA, RESOLUÇÃO E VÍDEO
+        else if (i >= 1 && i <= 4) {
+            // Puxa o valor da variável correspondente
             var _valor = "";
             if (i == 1) _valor = texto_tela[global.tela_modo];
             if (i == 2) _valor = global.texto_resolucao[global.resolucao_index];
             if (i == 3) _valor = texto_video[global.video_qualidade];
             
+            // NOVO: Puxa o nome do idioma baseado na chave "lang_nome"
+            if (i == 4) _valor = tr("lang_nome"); 
+            
             if (i == selecao_atual) {
                 draw_set_color(c_yellow);
-                // Desenha as Setas Fixas na tela
                 draw_text_transformed(_x_dir, _y, "<", 1.2, 1.2, 0);
                 draw_text_transformed(_x_dir + 150, _y, ">", 1.2, 1.2, 0);
             } else {
                 draw_set_color(c_white);
             }
             
-            // Desenha o valor centralizado perfeitamente entre as duas setas fixas
             draw_set_halign(fa_center);
             draw_text_transformed(_x_dir + 75, _y, _valor, 1.2, 1.2, 0);
             draw_set_halign(fa_left);
         }
-    } 
+    }
     // ========================================
-    // ITENS CENTRALIZADOS (Índices 4 e 5) - O QUE HAVIA SUMIDO!
+    // ITENS CENTRALIZADOS (Índices 5, 6 e 7)
+    // Skins(5), Controles(6) e Voltar(7)
     // ========================================
     else {
         draw_set_halign(fa_center);
@@ -92,7 +99,7 @@ if (estado_confirmacao) {
     draw_set_color(c_dkgray);
     draw_rectangle(_cx - 200, _cy - 100, _cx + 200, _cy + 100, false);
     draw_set_color(c_white);
-    draw_rectangle(_cx - 200, _cy - 100, _cx + 200, _cy + 100, true); // Borda
+    draw_rectangle(_cx - 200, _cy - 100, _cx + 200, _cy + 100, true); 
     
     draw_set_halign(fa_center);
     draw_text(_cx, _cy - 50, "Configurações visuais não salvas.\nDeseja manter e sair ou reverter?");
@@ -107,7 +114,7 @@ if (estado_confirmacao) {
     draw_text(_cx + 100, _cy + 30, _txt_reverter);
 }
 
-// Reset do Draw para não vazar a formatação para outras telas
+// Reset do Draw
 draw_set_halign(fa_left); 
 draw_set_valign(fa_top); 
 draw_set_color(c_white);

@@ -1,4 +1,6 @@
-// --- obj_controles: Evento Draw ---
+    // =========================================
+    // obj_controles: Evento Draw
+    // =========================================
 draw_set_valign(fa_middle);
 
 draw_set_halign(fa_center);

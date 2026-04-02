@@ -1,6 +1,7 @@
 // --- obj_opcoes: Evento Step ---
-
+// ==========================================
 // 1. INPUTS TECLADO
+// ==========================================
 var _esq_segurando = keyboard_check(vk_left)  || keyboard_check(ord("A"));
 var _dir_segurando = keyboard_check(vk_right) || keyboard_check(ord("D"));
 var _esq_clique    = keyboard_check_pressed(vk_left)  || keyboard_check_pressed(ord("A"));
@@ -9,7 +10,9 @@ var _mov_h         = _dir_clique - _esq_clique;
 var _enter         = keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_space);
 var _esc           = keyboard_check_pressed(vk_escape);
 
+// ==========================================
 // 2. INPUTS MOUSE
+// ==========================================
 var _mouse_click = mouse_check_button_pressed(mb_left);
 var _mouse_held  = mouse_check_button(mb_left);
 var _mx = mouse_x;
@@ -20,7 +23,7 @@ mx_prev = _mx;
 my_prev = _my;
 
 // ==========================================
-// MODO POPUP DE CONFIRMAÇÃO
+// 3. MODO POPUP DE CONFIRMAÇÃO
 // ==========================================
 if (estado_confirmacao) {
     var _cx = room_width / 2;
@@ -50,7 +53,7 @@ if (estado_confirmacao) {
         
         if (selecao_confirmacao == 0) {
             salvar_configuracoes(); 
-            room_goto(rm_menu); 
+            room_goto(global.sala_anterior); 
         } else {
             global.resolucao_index = resolucao_original; 
             global.tela_modo = tela_original;
@@ -63,38 +66,36 @@ if (estado_confirmacao) {
 }
 
 // ==========================================
-// MODO MENU NORMAL
+// 4. MODO MENU NORMAL
 // ==========================================
 
-// Teclado
-selecao_atual = navegar_menu_vertical(selecao_atual, array_length(menu_raiz));
+// Teclado (AGORA USA menu_chaves)
+selecao_atual = navegar_menu_vertical(selecao_atual, array_length(menu_chaves));
+
+// Matemática de centralização para o Mouse (AGORA USA menu_chaves)
+var _altura_total = (array_length(menu_chaves) - 1) * espacamento;
+var _y_inicial = (room_height / 2) - (_altura_total / 2) + 30;
 
 // Mouse Hover e Clique nas Opções
-for (var i = 0; i < array_length(menu_raiz); i++) {
-    var _y_item = room_height/2 + (i * espacamento);
+for (var i = 0; i < array_length(menu_chaves); i++) {
+    var _y_item = _y_inicial + (i * espacamento);
     
     if (_my > _y_item - 20 && _my < _y_item + 20) {
-        
-        // HOVER
         if (_mouse_moveu) selecao_atual = i;
         
-        // CLIQUE
-
         if (_mouse_click) {
             selecao_atual = i;
             
-            // Hitboxes fixas para Tela, Resolução e Vídeo
-            if (i >= 1 && i <= 3) {
+            // Hitboxes fixas APENAS para Tela, Resolução, Vídeo E IDIOMA (índices 1 a 4)
+            if (i >= 1 && i <= 4) {
                 var _x_dir = (room_width / 2) + 50;
-                // Seta Esquerda (Hitbox)
                 if (point_in_rectangle(_mx, _my, _x_dir - 20, _y_item - 20, _x_dir + 20, _y_item + 20)) _mov_h = -1;
-                // Seta Direita (Hitbox)
                 else if (point_in_rectangle(_mx, _my, _x_dir + 130, _y_item - 20, _x_dir + 170, _y_item + 20)) _mov_h = 1;
-                // Se clicar no meio, avança 1 (comportamento normal)
                 else _mov_h = 1; 
             }
             
-            if (i == 4 || i == 5) _enter = true; 
+            // Skins(5), Controles(6) e Voltar(7) são BOTÕES CENTRAIS, forçam o _enter
+            if (i >= 5) _enter = true; 
         }
         
         // ARRASTAR O SLIDER DE ÁUDIO
@@ -116,7 +117,7 @@ if (selecao_atual == 0) {
     audio_master_gain(global.vol_master);
 }
 
-// Executa as mudanças Visuais (Disparadas por Teclado ou Mouse)
+// Executa as mudanças Visuais e Idioma
 if (_mov_h != 0) {
     if (selecao_atual == 1) { 
         global.tela_modo += _mov_h;
@@ -135,23 +136,45 @@ if (_mov_h != 0) {
         if (global.video_qualidade < 0) global.video_qualidade = 2;
         if (global.video_qualidade > 2) global.video_qualidade = 0;
     }
+    // LÓGICA DO IDIOMA (Índice 4)
+    if (selecao_atual == 4) { 
+        global.idioma_atual += _mov_h;
+        if (global.idioma_atual < 0) global.idioma_atual = 4; // Volta para JP
+        if (global.idioma_atual > 4) global.idioma_atual = 0; // Volta para PT
+    }
 }
-// [4] IR PARA CONTROLES
-if (_enter && selecao_atual == 4) {
-    salvar_configuracoes(); // Salva o áudio/vídeo por segurança
-    room_goto(rm_controles); // Vai para a sala de controles
+
+// ==========================================
+// 5. IR PARA SKINS (Agora é o 5!)
+// ==========================================
+if (_enter && selecao_atual == 5) {
+    salvar_configuracoes(); 
+    room_goto(rm_skins); 
 }
-// [5] VOLTAR AO MENU
-if ((_enter && selecao_atual == 5) || _esc) {
+
+// ==========================================
+// 6. IR PARA CONTROLES (Agora é o 6!)
+// ==========================================
+if (_enter && selecao_atual == 6) {
+    salvar_configuracoes(); 
+    room_goto(rm_controles); 
+}
+
+// ==========================================
+// 7. VOLTAR AO MENU (Agora é o 7!)
+// ==========================================
+if ((_enter && selecao_atual == 7) || _esc) {
     var _mudou_tela = (global.tela_modo != tela_original);
     var _mudou_res = (global.resolucao_index != resolucao_original);
     var _mudou_video = (global.video_qualidade != video_original);
+    var _mudou_skin = (global.skin_atual != skin_original); 
+    var _mudou_idioma = (global.idioma_atual != idioma_original); // Adicionado check de idioma
     
-    if (_mudou_tela || _mudou_res || _mudou_video) {
+    if (_mudou_tela || _mudou_res || _mudou_video || _mudou_skin || _mudou_idioma) {
         estado_confirmacao = true;
         selecao_confirmacao = 0;
     } else {
         salvar_configuracoes(); 
-        room_goto(rm_menu);
+        room_goto(global.sala_anterior);
     }
 }
